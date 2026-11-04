@@ -28,12 +28,15 @@ export const site = {
     formEmail: 'l.mwesigye@alustudent.com',
   },
 
-  // Shown in the footer (Instagram + YouTube) with this handle next to the icon.
-  socialHandle: 'nexus_jpeg',
+  // Text shown next to each icon in the footer.
+  socialLabels: {
+    instagram: '@nexus_jpeg',
+    youtube: 'NEXUS ALU',
+  },
   socials: {
     instagram: 'https://www.instagram.com/nexus_jpeg',
     linkedin: '',
-    youtube: 'https://www.youtube.com/@nexus_jpeg',
+    youtube: 'https://www.youtube.com/@NEXUS-ALU',
     x: '',
     facebook: '',
     tiktok: '',

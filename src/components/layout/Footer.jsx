@@ -8,12 +8,12 @@ import { navLinks } from '../../lib/nav'
 const iconBox = 'flex size-10 shrink-0 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white transition duration-300'
 
 export default function Footer() {
-  const handle = `@${site.socialHandle}`
+  const labels = site.socialLabels ?? {}
   // Order: Instagram, location, YouTube.
   const items = [
-    site.socials.instagram && { key: 'instagram', label: handle, href: site.socials.instagram, srLabel: 'Instagram', icon: <SocialIcon name="instagram" /> },
+    site.socials.instagram && { key: 'instagram', label: labels.instagram, href: site.socials.instagram, srLabel: 'Instagram', icon: <SocialIcon name="instagram" /> },
     site.contact.location && { key: 'location', label: site.contact.location, icon: <MapPin className="size-5" aria-hidden="true" /> },
-    site.socials.youtube && { key: 'youtube', label: handle, href: site.socials.youtube, srLabel: 'YouTube', icon: <SocialIcon name="youtube" /> },
+    site.socials.youtube && { key: 'youtube', label: labels.youtube, href: site.socials.youtube, srLabel: 'YouTube', icon: <SocialIcon name="youtube" /> },
   ].filter(Boolean)
 
   return (
