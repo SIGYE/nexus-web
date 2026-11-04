@@ -1,0 +1,8 @@
+node_modules
+dist
+.DS_Store
+*.local
+.idea
+
+# Original full-size hero video (kept locally; the site uses videohero-1080.mp4 / videohero-720.mp4)
+public/images/hero/videohero.mp4

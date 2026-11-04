@@ -1,0 +1,161 @@
+import { useEffect } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import { CheckCircle2, Download, Lightbulb, Target } from 'lucide-react'
+import { challenges } from '../data/challenges'
+import { renderIcon } from '../lib/icons'
+import PageHero from '../components/ui/PageHero'
+import Reveal from '../components/ui/Reveal'
+import StatusBadge from '../components/ui/StatusBadge'
+import Button from '../components/ui/Button'
+import Picture from '../components/ui/Picture'
+import Timeline from '../components/Timeline'
+import VideoEmbed from '../components/VideoEmbed'
+
+const pad = (n) => String(n).padStart(2, '0')
+
+function Block({ icon: Icon, title, children }) {
+  return (
+    <div>
+      <h4 className="flex items-center gap-2 font-display text-xs font-semibold uppercase tracking-widest text-leaf-dark">
+        <Icon className="size-4" aria-hidden="true" />
+        {title}
+      </h4>
+      <div className="mt-2">{children}</div>
+    </div>
+  )
+}
+
+function Chapter({ challenge }) {
+  const { number, slug, title, icon, status, objective, whatWeDid, sections, media, links, lessons } = challenge
+  const images = media.images ?? []
+
+  return (
+    <Reveal
+      as="article"
+      id={`chapter-${number}`}
+      aria-labelledby={`${slug}-title`}
+      className="scroll-mt-28 rounded-3xl bg-white p-6 shadow-soft ring-1 ring-navy/5 sm:p-8"
+    >
+      <header>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <p className="flex items-center gap-3 font-display text-sm font-semibold uppercase tracking-widest text-navy">
+            <span className="rounded-xl bg-navy p-2 text-gold">{renderIcon(icon, { className: 'size-4' })}</span>
+            Challenge {pad(number)}
+          </p>
+          <StatusBadge status={status} />
+        </div>
+        <h3 id={`${slug}-title`} className="mt-4 text-2xl font-bold sm:text-3xl">
+          {title}
+        </h3>
+      </header>
+
+      <div className="mt-6 space-y-7">
+        <Block icon={Target} title="Objective">
+          <p className="text-base leading-relaxed">{objective}</p>
+        </Block>
+
+        <Block icon={CheckCircle2} title="What we did">
+          <ul className="space-y-2 text-base">
+            {whatWeDid.map((item, i) => (
+              <li key={i} className="flex gap-3">
+                <span className="mt-2.5 size-1.5 shrink-0 rounded-full bg-leaf" aria-hidden="true" />
+                {item}
+              </li>
+            ))}
+          </ul>
+          {sections.length > 0 && (
+            <dl className="mt-5 grid gap-3 sm:grid-cols-2">
+              {sections.map((s) => (
+                <div key={s.heading} className="rounded-2xl bg-mist p-4">
+                  <dt className="font-display text-sm font-semibold text-navy-deep">{s.heading}</dt>
+                  <dd className="mt-1 text-sm leading-relaxed">{s.body}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+        </Block>
+
+        <div className="space-y-3">
+          <VideoEmbed video={media.video} poster={media.poster} title={`Challenge ${number}: ${title}`} />
+          {images.length > 0 && (
+            <div className={`grid gap-3 ${images.length > 1 ? 'grid-cols-2' : ''}`}>
+              {images.map((img, i) => (
+                <Picture key={i} src={img.src} alt={img.alt} className="aspect-[4/3] rounded-2xl" />
+              ))}
+            </div>
+          )}
+        </div>
+
+        {links.length > 0 && (
+          <div className="flex flex-wrap gap-3">
+            {links.map((l) => (
+              <Button key={l.label} href={l.href} icon={Download}>
+                {l.label}
+              </Button>
+            ))}
+          </div>
+        )}
+
+        <Block icon={Lightbulb} title="Lessons learned">
+          <ul className="space-y-2 rounded-2xl border-l-4 border-gold bg-gold/10 p-4 text-base">
+            {lessons.map((l, i) => (
+              <li key={i}>{l}</li>
+            ))}
+          </ul>
+        </Block>
+      </div>
+    </Reveal>
+  )
+}
+
+export default function Journey() {
+  const [params] = useSearchParams()
+  const target = params.get('chapter')
+
+  // Deep links from the Home page: /journey?chapter=3
+  useEffect(() => {
+    if (!target) return
+    const t = setTimeout(() => document.getElementById(`chapter-${target}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 350)
+    return () => clearTimeout(t)
+  }, [target])
+
+  const done = challenges.filter((c) => c.status === 'completed').length
+
+  return (
+    <>
+      <PageHero
+        eyebrow="Our journey"
+        title={
+          <>
+            Six challenges. <span className="text-gold">One story.</span>
+          </>
+        }
+        description="How a group of students went from introducing ourselves to proposing a solution for youth unemployment in Rwanda."
+        next="text-mist"
+      >
+        <p className="mt-8 inline-flex items-center gap-3 rounded-full glass px-5 py-2 text-sm font-medium text-white">
+          <span className="font-display text-lg font-bold text-gold">
+            {done}/{challenges.length}
+          </span>
+          challenges completed
+        </p>
+      </PageHero>
+
+      <section className="bg-mist py-20 sm:py-28">
+        <div className="container-page">
+          <Timeline
+            items={challenges}
+            getKey={(c) => c.slug}
+            renderItem={(c) => <Chapter challenge={c} />}
+            renderAside={(c) => (
+              <div className="pt-2">
+                <span className="block font-display text-[9rem] font-extrabold leading-none text-outline-navy opacity-40">{pad(c.number)}</span>
+                <p className="mt-2 max-w-xs font-display text-lg font-semibold text-navy">{c.short}</p>
+              </div>
+            )}
+          />
+        </div>
+      </section>
+    </>
+  )
+}

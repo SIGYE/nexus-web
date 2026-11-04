@@ -1,0 +1,144 @@
+/**
+ * THE SIX E-LAB CHALLENGES
+ * ------------------------
+ * Every chapter on the Journey page uses the same layout:
+ *   number -> title -> objective -> what we did -> media -> lessons learned
+ *
+ * status:     'completed' | 'in-progress' | 'coming-next'   (update as you go)
+ * sections:   optional extra headed blocks (used by C2 and C4)
+ * media:      video  = YouTube link/ID or a file like 'videos/c3-reflection.mp4' ('' shows a "coming soon" frame)
+ *             poster = optional cover image for video files
+ *             images = [{ src: 'images/journey/c1-1.jpg', alt: 'Describe the photo' }]
+ * links:      optional buttons, e.g. a proposal download ('' href shows as "coming soon")
+ * icon:       lucide-react icon name listed in src/lib/icons.js
+ */
+
+import { site } from './site'
+import { PLACEHOLDER_POSTER, PLACEHOLDER_VIDEO } from './placeholders'
+
+export const challenges = [
+  {
+    number: 1,
+    slug: 'people-behind-the-mission',
+    title: 'The People Behind the Mission',
+    short: 'Who we are, where we come from and what each of us brings.',
+    icon: 'Users',
+    status: 'completed',
+    objective: 'Introduce the team behind NEXUS: our backgrounds, communities, interests and the roles we play.',
+    whatWeDid: ['Add what you did in this challenge', 'Add another step'],
+    sections: [],
+    media: {
+      video: PLACEHOLDER_VIDEO,
+      poster: PLACEHOLDER_POSTER,
+      images: [{ src: 'images/journey/placeholder-c1.svg', alt: 'Placeholder: add a photo from challenge 1' }],
+    },
+    links: [],
+    lessons: ['Add a lesson learned', 'Add another lesson'],
+  },
+  {
+    number: 2,
+    slug: 'stories-beyond-the-headlines',
+    title: 'Stories Beyond the Headlines',
+    short: 'Our community, the facts, the misconceptions and what makes it unique.',
+    icon: 'BookOpen',
+    status: 'completed',
+    objective: 'Tell the real story of our community beyond the headlines, and define how we work together as a team.',
+    whatWeDid: ['Add what you did in this challenge'],
+    sections: [
+      { heading: 'Our community', body: 'Add a description of your community.' },
+      { heading: 'Key facts', body: 'Add facts about your community. Source: to be added' },
+      { heading: 'Common misconceptions', body: 'Add the misconceptions you addressed.' },
+      { heading: 'What makes it unique', body: 'Add what makes your community unique.' },
+      { heading: 'Team roles', body: 'Add how you divided roles for this challenge.' },
+    ],
+    media: {
+      video: PLACEHOLDER_VIDEO,
+      poster: PLACEHOLDER_POSTER,
+      images: [{ src: 'images/journey/placeholder-c2.svg', alt: 'Placeholder: add a photo from challenge 2' }],
+    },
+    links: [],
+    lessons: ['Add a lesson learned'],
+  },
+  {
+    number: 3,
+    slug: 'help-lab',
+    title: 'HELP-LAB',
+    short: 'A cause we stood behind, the actions we took and what we reflected on.',
+    icon: 'Heart',
+    status: 'completed',
+    objective: 'Choose a cause, take action on it as a team and reflect on the experience in a 3-minute video.',
+    whatWeDid: ['Add the cause you chose', 'Add the actions you took'],
+    sections: [
+      { heading: 'The cause', body: 'Add the cause you chose and why.' },
+      { heading: 'Our actions', body: 'Add the actions you took.' },
+    ],
+    media: {
+      video: PLACEHOLDER_VIDEO, // 3-minute reflection video
+      poster: PLACEHOLDER_POSTER,
+      images: [{ src: 'images/journey/placeholder-c3.svg', alt: 'Placeholder: add a photo from challenge 3' }],
+    },
+    links: [],
+    lessons: ['Add a lesson learned'],
+  },
+  {
+    number: 4,
+    slug: 'learning-from-those-on-the-ground',
+    title: 'Learning From Those on the Ground',
+    short: 'An interview with an organisation already working on the problem.',
+    icon: 'MessageSquare',
+    status: 'completed',
+    objective: 'Interview an organisation working on youth employment to learn how they operate and what they have learned.',
+    whatWeDid: ['Add who you interviewed and how'],
+    sections: [
+      { heading: 'Who we interviewed', body: 'Add the organisation name and the person you spoke to (with consent).' },
+      { heading: 'Their mission', body: 'Add their mission.' },
+      { heading: 'How they operate', body: 'Add how they operate.' },
+      { heading: 'Challenges they face', body: 'Add the challenges they described.' },
+      { heading: 'Success stories', body: 'Add success stories they shared.' },
+      { heading: 'Future plans', body: 'Add their future plans.' },
+    ],
+    media: {
+      video: PLACEHOLDER_VIDEO, // interview video
+      poster: PLACEHOLDER_POSTER,
+      images: [{ src: 'images/journey/placeholder-c4.svg', alt: 'Placeholder: add a photo from challenge 4' }],
+    },
+    links: [],
+    lessons: ['Add a lesson learned'],
+  },
+  {
+    number: 5,
+    slug: 'our-solution-our-proposal',
+    title: 'Our Solution, Our Proposal',
+    short: 'Our $10,000 grant proposal and 3-minute pitch.',
+    icon: 'Rocket',
+    status: 'completed',
+    objective: 'Design a solution to youth unemployment and present it as a $10,000 grant proposal with a 3-minute pitch video.',
+    whatWeDid: ['Add how you developed the proposal'],
+    sections: [],
+    media: {
+      video: site.links.pitchVideo || PLACEHOLDER_VIDEO, // set once in site.js
+      poster: PLACEHOLDER_POSTER,
+      images: [{ src: 'images/journey/placeholder-c5.svg', alt: 'Placeholder photo' }],
+    },
+    links: [{ label: 'Download our proposal', href: site.links.proposal }],
+    lessons: ['Add a lesson learned'],
+  },
+  {
+    number: 6,
+    slug: 'our-digital-footprint',
+    title: 'Our Digital Footprint',
+    short: 'Why we built this website and what we learned building it.',
+    icon: 'Globe',
+    status: 'in-progress',
+    objective: 'Bring the whole E-Lab journey together in one website that tells our story and shares our proposal.',
+    whatWeDid: ['Add why you built this site and how'],
+    sections: [],
+    media: {
+      video: PLACEHOLDER_VIDEO,
+      poster: PLACEHOLDER_POSTER,
+      images: [{ src: 'images/journey/placeholder-c6.svg', alt: 'Placeholder photo' }],
+    },
+    links: [],
+    lessons: ['Add a lesson learned'],
+  },
+]
