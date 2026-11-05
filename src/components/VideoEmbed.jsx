@@ -5,11 +5,14 @@ import { getYouTubeId } from '../lib/youtube'
 import { asset } from '../lib/assets'
 import Picture from './ui/Picture'
 
+// Tells YouTube which site is embedding the player; without it some browsers get "Video unavailable".
+const embedOrigin = () => (typeof window !== 'undefined' && window.location.origin.startsWith('http') ? window.location.origin : '')
+
 const isVideoFile = (src) => /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(src || '')
 
 /**
  * Video player.
- * - YouTube link or ID -> thumbnail facade, then a youtube-nocookie.com iframe on click.
+ * - YouTube link or ID -> thumbnail facade, then a youtube.com iframe on click.
  * - Video file ('videos/clip.mp4' in /public, or a full .mp4 URL) -> native <video>, loaded on demand.
  * - Empty -> "Video coming soon" placeholder.
  * - `autoplayMuted` (YouTube only): starts playing muted once scrolled into view; viewers unmute with YouTube's controls.
@@ -51,12 +54,13 @@ export default function VideoEmbed({ video, title = 'Video', poster, dark = fals
   }
 
   if (autoplayMuted) {
-    const params = new URLSearchParams({ autoplay: '1', mute: '1', playsinline: '1', rel: '0', modestbranding: '1', loop: '1', playlist: id })
+    const params = new URLSearchParams({ autoplay: '1', mute: '1', playsinline: '1', rel: '0', loop: '1', playlist: id })
+    if (embedOrigin()) params.set('origin', embedOrigin())
     return (
       <div ref={boxRef} className={`relative aspect-video overflow-hidden rounded-2xl ${mono ? 'border-2 border-black bg-black' : 'bg-navy-deep shadow-lift'} ${className}`}>
         {near ? (
           <iframe
-            src={`https://www.youtube-nocookie.com/embed/${id}?${params}`}
+            src={`https://www.youtube.com/embed/${id}?${params}`}
             title={title}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             referrerPolicy="strict-origin-when-cross-origin"
@@ -75,7 +79,7 @@ export default function VideoEmbed({ video, title = 'Video', poster, dark = fals
     <div className={`relative aspect-video overflow-hidden rounded-2xl ${mono ? 'border-2 border-black bg-black' : 'bg-navy-deep shadow-lift'} ${className}`}>
       {playing ? (
         <iframe
-          src={`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`}
+          src={`https://www.youtube.com/embed/${id}?autoplay=1&rel=0${embedOrigin() ? `&origin=${encodeURIComponent(embedOrigin())}` : ''}`}
           title={title}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="strict-origin-when-cross-origin"

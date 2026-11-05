@@ -3,18 +3,12 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import Logo from './Logo'
-import { navLinks, proposalLink } from '../../lib/nav'
+import { navLinks } from '../../lib/nav'
 
-// White bar with a soft black edge on every side (top, bottom, left, right) that fades inward into white.
-const edgeFade = 'inset 0 0 18px 4px rgb(0 0 0 / 0.6), inset 0 0 4px 1px rgb(0 0 0 / 0.4), 0 10px 30px -12px rgb(0 0 0 / 0.5)'
-
-const beigeButton =
-  'items-center justify-center whitespace-nowrap rounded-full border border-black/10 bg-[#ece2cf] px-5 py-2 font-display text-sm font-semibold text-neutral-900 transition duration-300 hover:-translate-y-px hover:bg-[#e3d5bb]'
-
-/** White pill whose edges fade from black into white all the way around. */
-function FadedPill({ className = '', innerClassName = '', children }) {
+/** Plain white bar with a solid black border and rounded corners. */
+function NavBox({ className = '', innerClassName = '', children }) {
   return (
-    <div className={`rounded-full bg-white ${className}`} style={{ boxShadow: edgeFade }}>
+    <div className={`rounded-2xl border border-black bg-white ${className}`}>
       <div className={innerClassName}>{children}</div>
     </div>
   )
@@ -58,9 +52,9 @@ export default function Navbar() {
         <Logo />
       </Link>
 
-      {/* Navbar: pages + proposal button, floating in the top-right corner */}
+      {/* Navbar: pages, floating in the top-right corner */}
       <div className="pointer-events-auto relative">
-        <FadedPill innerClassName="flex items-center gap-1 py-2 pl-2 pr-2 lg:pl-4">
+        <NavBox innerClassName="flex items-center gap-1 py-2 pl-2 pr-2 lg:pl-4">
           <nav aria-label="Main" className="hidden lg:block">
             <ul className="flex items-center gap-0.5">
               {navLinks.map(({ to, label, end }) => (
@@ -92,10 +86,6 @@ export default function Navbar() {
             </ul>
           </nav>
 
-          <Link to={proposalLink.to} onClick={close} className={`${beigeButton} ml-1 hidden sm:inline-flex`}>
-            {proposalLink.label}
-          </Link>
-
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
@@ -106,7 +96,7 @@ export default function Navbar() {
           >
             {open ? <X className="size-6" aria-hidden="true" /> : <Menu className="size-6" aria-hidden="true" />}
           </button>
-        </FadedPill>
+        </NavBox>
 
         <AnimatePresence>
           {open && (
@@ -135,11 +125,7 @@ export default function Navbar() {
                     </NavLink>
                   </li>
                 ))}
-              </ul>
-              <Link to={proposalLink.to} onClick={close} className={`${beigeButton} mt-2 flex w-full py-3 sm:hidden`}>
-                {proposalLink.label}
-              </Link>
-            </motion.div>
+              </ul>            </motion.div>
           )}
         </AnimatePresence>
       </div>

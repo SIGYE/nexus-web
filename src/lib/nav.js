@@ -5,6 +5,3 @@ export const navLinks = [
   { to: '/services', label: 'Our Services' },
   { to: '/contact', label: 'Contact Us' },
 ]
-
-// Beige call-to-action at the end of the navbar.
-export const proposalLink = { to: '/proposal', label: 'Our Proposal' }

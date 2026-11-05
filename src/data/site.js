@@ -233,15 +233,3 @@ export const servicesPage = {
     },
   ],
 }
-
-// Our Proposal page: the pitch deck, shown as slides.
-// Slide images were made from the PDF (public/docs/pitch/slide-01.jpg …, thumbnails in public/docs/pitch/thumbs/).
-// If the deck changes, export a new PDF and ask for the slide images to be regenerated (or replace them by hand, same names).
-export const proposalPage = {
-  title: 'Our Proposal',
-  text: 'Our pitch for the $10,000 grant: how NEXUS plans to turn the potential of Rwanda’s young people into skills, jobs and enterprises. Browse the slides below.',
-  pdf: 'docs/Yellow Modern Investor Deck Presentation.pdf',
-  slideCount: 11,
-  slide: (n) => `docs/pitch/slide-${String(n).padStart(2, '0')}.jpg`,
-  thumb: (n) => `docs/pitch/thumbs/slide-${String(n).padStart(2, '0')}.jpg`,
-}
